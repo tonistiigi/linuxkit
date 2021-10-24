@@ -3,8 +3,6 @@ FROM alpine:3.13 AS mirror
 # update base image
 RUN apk update && apk upgrade -a
 
-# Copy Dockerfile so we can include it in the hash
-COPY Dockerfile /Dockerfile
 COPY packages* /tmp/
 
 # mirror packages - both generic and repository specific ones
@@ -100,7 +98,7 @@ COPY --from=mirror /etc/apk/repositories.upstream /etc/apk/repositories.upstream
 COPY --from=mirror /etc/apk/keys /etc/apk/keys/
 COPY --from=mirror /mirror /mirror/
 COPY --from=mirror /go/bin /go/bin/
-COPY --from=mirror /Dockerfile /Dockerfile
+COPY Dockerfile /Dockerfile
 COPY --from=mirror /go/src/github.com/containerd/containerd /go/src/github.com/containerd/containerd/
 COPY --from=mirror /iucode_tool /usr/bin/
 
