@@ -260,12 +260,12 @@ $(eval $(call kernel,5.12.14,5.12.x,$(EXTRA),$(DEBUG)))
 $(eval $(call kernel,5.10.47,5.10.x,$(EXTRA),$(DEBUG)))
 $(eval $(call kernel,5.10.47,5.10.x,,-dbg))
 $(eval $(call kernel,5.4.129,5.4.x,$(EXTRA),$(DEBUG)))
-$(eval $(call kernel,5.11.4,5.11.x,-rt,))
+$(eval $(call kernel,5.11.22,5.11.x,-rt,))
 
 else ifeq ($(ARCH),$(filter $(ARCH),aarch64 arm64))
 $(eval $(call kernel,5.12.14,5.12.x,$(EXTRA),$(DEBUG)))
 $(eval $(call kernel,5.10.47,5.10.x,$(EXTRA),$(DEBUG)))
-$(eval $(call kernel,5.11.4,5.11.x,-rt,))
+$(eval $(call kernel,5.11.22,5.11.x,-rt,))
 
 endif
 

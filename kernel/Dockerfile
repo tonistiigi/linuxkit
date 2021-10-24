@@ -24,7 +24,9 @@ RUN apk add \
     mpfr-dev \
     ncurses-dev \
     openssl-dev \
+    pahole \
     patch \
+    python3 \
     rsync \
     sed \
     squashfs-tools \
