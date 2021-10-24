@@ -21,14 +21,6 @@ RUN for repopkgs in /tmp/packages.repo.*; do \
         apk update --repositories-file=${repofile} --cache-dir ${cachedir} && \
         apk fetch --repositories-file=${repofile} --cache-dir ${cachedir} --recursive -o /mirror/$(apk --print-arch) $(cat ${mergedfile}); done
 
-# we CANNOT allow musl-dev or musl > 1.2.2-r0, which ships with alpine:3.13, because 1.2.2-r2, which ships with alpine:edge / alpine:3.14
-#   uses the new faccessat2 system call which gives errors, see https://wiki.alpinelinux.org/wiki/Draft_Release_Notes_for_Alpine_3.14.0#faccessat2
-RUN target="1.2.2-r0" && \
-    verlte() { [  "$1" = $(printf '%s\n%s' "$1" "$2" | sort -V | head -n1) ] ; } && \
-    for file in /mirror/$(apk --print-arch)/musl-*.apk; do \
-    version=$(tar -xf ${file}  -O .PKGINFO | awk '$1 == "pkgver" {print $3}') && \
-    if ! verlte ${version} ${target} ; then echo "removing ${file}" && rm ${file}; fi; done
-
 # install abuild and sudo for signing
 RUN apk add --no-cache abuild sudo
 
