@@ -11,7 +11,8 @@ RUN cat /tmp/packages.$(uname -m) >> /tmp/packages && \
    apk fetch --recursive -o /mirror/$(apk --print-arch) $(apk info; cat /tmp/packages)
 
 # these are the repository-specific ones, if they exist
-RUN for repopkgs in /tmp/packages.repo.*; do \
+RUN grep community /etc/apk/repositories | sed s/community/testing/ >> /etc/apk/repositories && \
+  for repopkgs in /tmp/packages.repo.*; do \
         repo=${repopkgs##*repo.} && archspecific=/tmp/packages.$(uname -m).repo.${repo} && mergedfile=/tmp/packages.merged.${repo} && repofile=/tmp/repositories.${repo} && \
 	cachedir=/tmp/cache/${repo} && \
 	mkdir -p ${cachedir} && \
